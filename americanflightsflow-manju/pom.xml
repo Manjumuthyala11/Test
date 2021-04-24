@@ -33,9 +33,10 @@
 				<cloudHubDeployment>
 						<username>manjumuthyala4</username>
 						<environment>Sandbox</environment>
+						<workers>1</workers>
 						
 						<workerType>Micro</workerType>
-						<workers>1</workers>
+						
 						<applicationName>americanflightsflow-ws</applicationName>
 						<password>anANya429</password>
 						<muleVersion>4.3.0</muleVersion>
