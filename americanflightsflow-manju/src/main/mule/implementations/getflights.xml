@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<vm:config name="VM_Config" doc:name="VM Config" doc:id="7c53e769-0d9a-40e1-9326-d9c02daa8165" >
+		<vm:queues >
+			<vm:queue queueName="testQueue" />
+		</vm:queues>
+	</vm:config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="804329ae-9b21-49fc-9baa-0263c3c9119c" >
+		<file:connection workingDir="C:\TestFiles" />
+	</file:config>
+	<flow name="getflightsFlow" doc:id="4ee08f75-81fa-491a-b83c-524ed8e209b6" >
+		<db:select doc:name="Select" doc:id="6d6bf592-b3e4-4720-95e8-fa5ff217f94a" config-ref="Database_Config">
+			<db:sql ><![CDATA[select *from american;]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="f04ddbf3-2712-445c-8389-d4d0fed49aad" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	ID: payload01.ID,
+	code: payload01.code1,
+	price: payload01.price default 0,
+	depaturedate: payload01.fromAirport default "",
+	orign: payload01.takeOffDate as String default "",
+	destination: payload01.toAirport default "",
+	plane: {
+		"type": payload01.planeType default "",
+		totalseats: payload01.totalSeats default 0
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<vm:publish queueName="testQueue" doc:name="Publish" doc:id="28d96087-43ed-4d37-a5bd-311352711537" config-ref="VM_Config"/>
+	</flow>
+	<flow name="getflightsFlow1" doc:id="6ff53f78-c27b-40a7-9238-882eb8576ab6" >
+		<vm:listener queueName="testQueue" doc:name="Listener" doc:id="9114db3a-3a84-4a6c-8f6f-1baf627e8e61" config-ref="VM_Config"/>
+		<file:write doc:name="Write" doc:id="eefdd7e4-610d-41e0-acc2-f4c7ce2b76ca" config-ref="File_Config" path="In1/Flights.csv"/>
+		<logger level="INFO" doc:name="Logger" doc:id="e7800979-5c57-458f-a23f-da32b5fdc97d" message="#[payload]"/>
+	</flow>
+</mule>
