@@ -6,8 +6,9 @@
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="46886eec-83d0-429a-bbfd-0128e2b83c2c" >
-		<http:listener-connection host="0.0.0.0" port="8081" />
+		<http:listener-connection host="${HTTP.hostname}" port="${HTTP.port}" />
 	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="49728b44-d75b-4573-aaaf-b44bbafd42b7" file="queryparams-config.yaml" />
 	<flow name="queryparamsFlow" doc:id="c9c5351e-c8e4-4580-95df-90d6245c07ad" >
 		<http:listener doc:name="Listener" doc:id="c7e56d7f-edfc-44e8-84d9-203c1ca2a259" config-ref="HTTP_Listener_config" path="/test"/>
 		<ee:transform doc:name="Transform Message" doc:id="f8efdf98-cfad-45c6-b192-0d2b540e859c" >
