@@ -36,7 +36,7 @@
 						<environment>Sandbox</environment>
 						<workers>1</workers>
 						<workerType>Micro</workerType>
-						<applicationName>queryparams</applicationName>
+						<applicationName>queryparams_Prod</applicationName>
 						<password>anANya429</password>
 						<muleVersion>4.3.0</muleVersion>
 						<objectStoreV2>true</objectStoreV2>
