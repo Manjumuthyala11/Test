@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="1e7e1ad4-21b8-42d4-b5bd-6546df7c8d06" >
+		<http:listener-connection host="${Http.Host}" port="${Http.Port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="778b5606-a7c8-4298-80c8-fcaf1703a91c" file="config.yaml" />
+	<flow name="hellomanjuFlow" doc:id="d5832f63-63b5-4e49-ad1c-aba9902a78f7" >
+		<http:listener doc:name="Listener" doc:id="d65a19f3-f6bf-43c5-a412-c2adec10b8f4" config-ref="HTTP_Listener_config" path="/Hellomanju"/>
+		<ee:transform doc:name="Transform Message" doc:id="fe5d3117-e53b-4844-8c2b-3b0888f2443d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message:"Hello" ++ "manju"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
