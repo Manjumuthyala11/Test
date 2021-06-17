@@ -6,8 +6,9 @@
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="30e4b4e9-b81a-416d-b5e5-8e40b02750f5">
-		<http:listener-connection host="0.0.0.0" port="8081" />
+		<http:listener-connection host="${Http.Host}" port="${Http.Port}" />
 	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="c65b524e-24ad-4cfc-b5e4-a7ffc4a1a91c" file="sam.yaml" />
 	<flow name="helloworldFlow" doc:id="69cee280-6233-47fd-936f-e51bec8b360d" >
 		<http:listener doc:name="Listener" doc:id="71fdb2c0-55bb-4ede-9d12-51e0ec10b529" config-ref="HTTP_Listener_config" path="/Hellotesting"/>
 		<ee:transform doc:name="Transform Message" doc:id="1336a284-db68-41d5-94c2-c9ab7a707400" >
