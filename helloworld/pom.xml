@@ -34,8 +34,8 @@
 				<configuration>
 				<cloudHubDeployment>
 						<username>manjumuthyala6</username>
-						<environment>Sandbox</environment>
 						<workers>1</workers>
+						<environment>Sandbox</environment>
 						<workerType>Micro</workerType>
 						<applicationName>HelloProcess</applicationName>
 						<password>anANya429</password>
