@@ -33,7 +33,7 @@
 				
 				<configuration>
 				<cloudHubDeployment>
-						<username>manjumuthyala4</username>
+						<username>manjumuthyala6</username>
 						<environment>Sandbox</environment>
 						<workers>1</workers>
 						<workerType>Micro</workerType>
