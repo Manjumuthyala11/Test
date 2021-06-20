@@ -32,8 +32,9 @@
 				<extensions>true</extensions>
 				<configuration>
 				<cloudHubDeployment>
-						<username>manjumuthyala6</username>
+						
 						<environment>Sandbox</environment>
+						<username>manjumuthyala6</username>
 						<workers>1</workers>
 						<workerType>Micro</workerType>
 						<applicationName>hellomanju</applicationName>
